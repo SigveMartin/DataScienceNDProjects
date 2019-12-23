@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 from sqlalchemy import create_engine
 
 def process_data():
@@ -18,10 +17,24 @@ def process_data():
     df = pd.concat([df, categories], axis=1, join='outer')
     # remove duplicates
     df = remove_duplicates(df)
-
+    # remove missing and unused columns
+    df = drop_missing_and_unused(df)
+    # concatenation casted the categories to floats.
+    # want them as itegers
+    # Convert category columns to int again (after converted to float after concatenation)
+    to_int_columns = list(set(df.columns).difference(set(['message'])))
+    df[to_int_columns] = df[to_int_columns].astype("int32")
     # save cleaned data set to sql data base
     engine = create_engine('sqlite:///DisasterResponse.db')
-    df.to_sql('DisasterResponse', engine, index=False)
+    df.to_sql("coded_responses", engine,if_exists='replace', index=False)
+
+def drop_missing_and_unused(df):
+    # drop id, original and genre columns
+    # original have over 60% missing
+    df = df.drop(columns=["id","original","genre"])
+    # drop rows with any missing values
+    df = df.dropna()
+    return df
 
 def remove_duplicates(df):
     # remove "original message column"
