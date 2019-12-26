@@ -47,7 +47,7 @@ def clean_data(df):
 
 def save_data(df, database_filename):
     # save cleaned data set to sql data base
-    engine = create_engine('sqlite:///{}'.format(database_filepath))
+    engine = create_engine('sqlite:///data/{}'.format(database_filepath))
     df.to_sql("coded_responses", engine,if_exists='replace', index=False)
 
 
