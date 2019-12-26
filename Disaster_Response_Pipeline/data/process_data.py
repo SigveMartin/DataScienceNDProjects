@@ -1,5 +1,6 @@
 import sys
 from sqlalchemy import create_engine
+import pandas as pd
 
 def load_data(messages_filepath, categories_filepath):
     # load messages dataset
@@ -34,20 +35,18 @@ def clean_data(df):
     df = pd.concat([df, categories], axis=1, join='outer')
     # remove duplicates
     df = df.drop_duplicates()
-    # remove missing and unused columns
-    df = df.drop(columns=["id","original","genre"])
-    # drop rows with any missing values
-    df = df.dropna()
+    # remove missing for categorical
+    to_int_columns = list(set(df.columns).difference(set(['message',"id","genre","original"])))
+    df = df.dropna(subset=to_int_columns)
     # concatenation casted the categories to floats.
     # want them as itegers
     # Convert category columns to int again (after converted to float after concatenation)
-    to_int_columns = list(set(df.columns).difference(set(['message'])))
     df[to_int_columns] = df[to_int_columns].astype("int32")
     return df
 
 def save_data(df, database_filename):
     # save cleaned data set to sql data base
-    engine = create_engine('sqlite:///data/{}'.format(database_filepath))
+    engine = create_engine('sqlite:///{}'.format(database_filename))
     df.to_sql("coded_responses", engine,if_exists='replace', index=False)
 
 

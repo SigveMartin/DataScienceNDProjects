@@ -1,24 +1,78 @@
+# import libraries
 import sys
+import nltk
+nltk.download(['punkt', 'wordnet'])
 
+import pandas as pd
+import numpy as np
+from sqlalchemy import create_engine
+from nltk.tokenize import word_tokenize
+from nltk.stem import WordNetLemmatizer
+
+from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.multioutput import MultiOutputClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import classification_report
 
 def load_data(database_filepath):
-    pass
 
+    # database_filepath "../data/DisasterResponse.db"
+    engine = create_engine('sqlite:///{}'.format(database_filepath))
+    df = pd.read_sql_table('coded_responses', engine)
+    X = df["message"]
+    Y = df.drop(columns=["message","id","genre","original"])
+    categories = list(Y.columns)
+    return X, Y, categories
 
 def tokenize(text):
-    pass
+    tokens = word_tokenize(text)
+    lemmatizer = WordNetLemmatizer()
+
+    clean_tokens = []
+    for tok in tokens:
+        clean_tok = lemmatizer.lemmatize(tok).lower().strip()
+        clean_tokens.append(clean_tok)
+
+    return clean_tokens
 
 
 def build_model():
-    pass
+    model = Pipeline([
+        ('vect', CountVectorizer(tokenizer=tokenize)),
+        ('tfidf', TfidfTransformer()),
+        ('clf', MultiOutputClassifier(RandomForestClassifier(n_estimators=100, random_state=1)))
+    ])
+    parameters = {
+        'vect__ngram_range': ((1, 1), (1, 2)),
+        'vect__max_df': (0.5, 0.75, 1.0),
+        'vect__max_features': (None, 5000, 10000),
+        'tfidf__use_idf': (True, False),
+        'clf__estimator__n_estimators': [200, 1100, 2000],
+        'clf__estimator__max_features': ['auto', 'sqrt']
+        #'clf__estimator__max_depth': max_depth,
+        #'clf__estimator__min_samples_split': min_samples_split,
+        #'clf__estimator__min_samples_leaf':min_samples_leaf,
+        #'clf__estimator__bootstrap': bootstrap
+    }
+
+    model = GridSearchCV(model, param_grid=parameters,n_jobs=-1)
+    return model
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
-    pass
+    y_pred = model.predict(X_test)
+    y_pred=pd.DataFrame(data=y_pred,columns=category_names)
+    for column in Y_test:
+        print(column)
+        print(classification_report(
+            Y_test[column].values, y_pred[column].values))
 
 
 def save_model(model, model_filepath):
-    pass
+    pickle.dump(model, open(model_filepath, 'wb'))
 
 
 def main():
