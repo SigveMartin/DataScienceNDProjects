@@ -87,8 +87,8 @@ def build_model():
     parameters = {
         #'vect__ngram_range': ((1, 1), (1, 2)),
         #'vect__max_df': (0.5, 1.0),
-        #'vect__max_features': (None, 7500),
-        'clf__estimator__n_estimators': [200, 1100, 2000],
+        'vect__max_features': (None, 7500),
+        'clf__estimator__n_estimators': [50, 150, 500],
         #'clf__estimator__max_features': ['auto', 'sqrt']
         #'clf__estimator__max_depth': max_depth,
         #'clf__estimator__min_samples_split': min_samples_split,
