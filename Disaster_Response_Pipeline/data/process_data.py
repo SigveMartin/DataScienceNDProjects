@@ -1,8 +1,18 @@
+# import modules
 import sys
 from sqlalchemy import create_engine
 import pandas as pd
 
 def load_data(messages_filepath, categories_filepath):
+    """ loads messages and labels and merges in df
+
+    Args:
+        messages_filepath (string): filepath to message dataset
+        categories_filepath (string): filepath to categories dataset
+
+    Returns:
+        df (DataFrame): merged dataframe of messages and categories
+    """
     # load messages dataset
     messages = pd.read_csv(messages_filepath)
     # load categories dataset
@@ -12,6 +22,13 @@ def load_data(messages_filepath, categories_filepath):
     return df
 
 def clean_data(df):
+    """ cleans data ready for training
+
+    Args:
+        df (DataFrame): pandas dataframe with merged messages and categories
+    Returns:
+        df (DataFrame): cleaned pandas dataframe
+    """
     # clean categories
     # create a dataframe of the 36 individual category columns
     categories = df["categories"].str.split(";", expand=True)
@@ -45,28 +62,49 @@ def clean_data(df):
     return df
 
 def save_data(df, database_filename):
+    """ saves the cleaned data to a sql database file.
+
+    Args:
+        df (DataFrame): cleaned data to be stored
+        database_filename (string): filepath to sql database
+
+    Returns:
+        None
+    """
     # save cleaned data set to sql data base
     engine = create_engine('sqlite:///{}'.format(database_filename))
     df.to_sql("coded_responses", engine,if_exists='replace', index=False)
 
 
 def main():
+    """ main function that is called when running script from command line
+
+    Args:
+        filename (string): name of this file (process_data.py)
+        messages_filepath (string): filepath to messages data (csv)
+        categories_filepath (string): filepath to categories data (csv)
+        database_filepath (string): Path to database file
+    Returns:
+        None
+    """
+    # Check for command line arguments
     if len(sys.argv) == 4:
-
+        # get arguments from command line
         messages_filepath, categories_filepath, database_filepath = sys.argv[1:]
-
+        # load data into dataframe
         print('Loading data...\n    MESSAGES: {}\n    CATEGORIES: {}'
               .format(messages_filepath, categories_filepath))
         df = load_data(messages_filepath, categories_filepath)
-
+        # clean data ready for training
         print('Cleaning data...')
         df = clean_data(df)
-
+        # Save cleaned data
         print('Saving data...\n    DATABASE: {}'.format(database_filepath))
         save_data(df, database_filepath)
-
+        # notify user of done
         print('Cleaned data saved to database!')
 
+    # Prompt user to provide command line arguments
     else:
         print('Please provide the filepaths of the messages and categories '\
               'datasets as the first and second argument respectively, as '\
