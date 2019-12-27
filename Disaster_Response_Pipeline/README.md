@@ -19,13 +19,9 @@ And provide classification of new messages entered in the input field, as the te
 ## Project process
 The project was a threefold challenge to build;  
 
-1.Create a data pipeline is the Extract, Transform, and Load (ETL) process. Here, we read the dataset, clean the data, and then store it in a SQLite database. We do the data cleaning with pandas and then save the data into an SQLite database.
+1. Create a data pipeline is the Extract, Transform, and Load (ETL) process. Here, we read the dataset, clean the data, and then store it in a SQLite database. We do the data cleaning with pandas and then save the data into an SQLite database. The [ETL Pipeline Preparation](/data/ETL_Pipeline_Preparation.ipynb) was used to build the algoritms that afterwards was implemented in the [process_data.py](/data/process_data.py)
 
-The [ETL Pipeline Preparation](/data/ETL_Pipeline_Preparation.ipynb) was used to build the algoritms that afterwards was implemented in the [process_data.py](/data/process_data.py)
-
-2. Create a Machine Learning (ML) Pipeline for training a classifier. Here we split the data into a training set and a test set. Then, we create a machine learning pipeline that uses NLTK, as well as scikit-learn's Pipeline and GridSearchCV to output a final model that uses the message column to predict classifications for 36 categories (multi-output classification). Finally, you will export your model to a pickle file.
-
-The [ML Pipeline Preparation](ML_Pipeline_Preparation.ipynb) notebook was used to build the algoritm, that was implemented in [train_classifier.py](/data/train_classifier.py) afterwards.
+2. Create a Machine Learning (ML) Pipeline for training a classifier. Here we split the data into a training set and a test set. Then, we create a machine learning pipeline that uses NLTK, as well as scikit-learn's Pipeline and GridSearchCV to output a final model that uses the message column to predict classifications for 36 categories (multi-output classification). Finally, you will export your model to a pickle file. The [ML Pipeline Preparation](ML_Pipeline_Preparation.ipynb) notebook was used to build the algoritm, that was implemented in [train_classifier.py](/data/train_classifier.py) afterwards.
 
 3. In the last step we modified a Flask webapp, with some visualizations and code to ensure the pipeline could be used to classifiy new messages.
 
