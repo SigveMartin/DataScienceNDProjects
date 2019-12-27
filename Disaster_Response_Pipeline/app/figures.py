@@ -1,3 +1,4 @@
+# import modules
 import pandas as pd
 import plotly.graph_objs as go
 
@@ -12,7 +13,7 @@ def return_figures(df):
 
     """
 
-# first chart messages by genres as bar chart
+# first chart plots messages by genres as bar chart
     graph_one = []
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
