@@ -42,8 +42,6 @@ def load_data(database_filepath):
 def tokenize(text):
     """ Creates tokens of a message
 
-    Used to tokenize input message from webapp.
-
     Args:
         text (string): message to be tokenized
     Returns:
@@ -89,7 +87,7 @@ def build_model():
     parameters = {
         #'vect__ngram_range': ((1, 1), (1, 2)),
         #'vect__max_df': (0.5, 1.0),
-        'vect__max_features': (None, 7500),
+        #'vect__max_features': (None, 7500),
         'clf__estimator__n_estimators': [200, 1100, 2000],
         #'clf__estimator__max_features': ['auto', 'sqrt']
         #'clf__estimator__max_depth': max_depth,
