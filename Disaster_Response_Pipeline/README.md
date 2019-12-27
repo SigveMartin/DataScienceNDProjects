@@ -59,7 +59,7 @@ Download [classifier.pkl here](https://www.dropbox.com/s/7vzqh1jhc8abnsf/classif
 
 To test this on a mac;
 1. use the environment.yml to create a conda environment.
-2. Unzip the classifier.pkl file.
+2. download and Unzip the classifier.pkl file.
 3. Run the following commands in the project's root directory to set up your database and model.
 
     - To run ETL pipeline that cleans data and stores in database
@@ -82,4 +82,4 @@ Since this is disaster messages where the costs of having a mis-classified actua
 
 As the article above mentions, **precision** is maybe a better measure when the costs of False Positive is high. Eg. If we are afraid of falsly classifying messages into categories. As this might create much more traffic on the relevant organizations as needed, this might be a better measure here.
 
-Recall should, according to the article, be the model metric we use to select our best model when there is a high cost associated with False Negative. Eg. If we are afraid that we wrongly classify an emmergancy message to "no importance". This might be the best measure here, as we want to optimize for case where we actually spot messages that are from people in need of help.  
+**Recall** should, according to the article, be the model metric we use to select our best model when there is a high cost associated with False Negative. Eg. If we are afraid that we wrongly classify an emmergancy message to "no importance". This might be the best measure here, as we want to optimize for case where we actually spot messages that are from people in need of help.  
