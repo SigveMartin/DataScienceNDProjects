@@ -96,7 +96,7 @@ def build_model():
         #'clf__estimator__bootstrap': bootstrap
     }
     # Use GridSearchCV to find optimized model when fitted to data.
-    model = GridSearchCV(model, param_grid=parameters,cv = 5,n_jobs=-1)
+    model = GridSearchCV(model, param_grid=parameters,cv = 5)
     return model
 
 
