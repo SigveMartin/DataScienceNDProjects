@@ -6,15 +6,15 @@ The data set contain real messages that were sent during disaster events. This p
 
 The project includes a web app where an emergency worker can input a new message and get classification results in several categories.
 
-![webapp screenshot](/../img/dr_first_page.png)
+![webapp screenshot](../img/dr_first_page.png)
 
 The web app will also display visualizations of the data, as showed below.
 
-![webapp screenshot](/../img/dr_visuals.png)
+![webapp screenshot](../img/dr_visuals.png)
 
 And provide classification of new messages entered in the input field, as the text *"A ridge of water is coming. Need help! Trapped on iland"* as showed here;
 
-![webapp screenshot](/../img/dr_message_code.png)
+![webapp screenshot](../img/dr_message_code.png)
 
 ## Project process
 The project was a threefold challenge to build;  
