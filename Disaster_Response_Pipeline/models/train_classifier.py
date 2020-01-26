@@ -2,6 +2,7 @@
 import sys
 import nltk
 nltk.download(['punkt', 'wordnet'])
+import pickle
 
 import pandas as pd
 import numpy as np
