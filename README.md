@@ -6,7 +6,9 @@ There will be added seperate folders per project done as part of the program.
 
 ## Project 1: Writing a Data Science Blog Post
 
-For this project, you will be creating a blog post and Github repository to begin building a data science portfolio of your own. You can gain some inspiration from Robert's posts here.
+For this project, we will be creating a blog post and Github repository to begin building a data science portfolio of your own. The blogpost is shown in the screenshot below. [Also found through this link](https://www.rebelsnarrative.com/machine-utilization).
+
+![blogpost screenshot](/img/blogpost.png)
 
 ## Project 2: Disaster Response Pipeline
 
